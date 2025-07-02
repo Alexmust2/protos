@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package = "github.com/notify-hub/pkg/proto";
+
+message SendNotificationRequest {
+  string channel = 1;         // telegram, email, sms
+  string integration_key = 2; // bot-client-A, smtp-provider-B
+  string receiver = 3;        // chat_id, email
+  string message = 4;
+}
+
+message SendNotificationResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+service NotificationService {
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+}

@@ -1,0 +1,11 @@
+*.pb.go
+*.pb.gw.go
+*.pb.validate.go
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
