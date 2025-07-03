@@ -4,18 +4,27 @@ package notification;
 
 option go_package = "github.com/notify-hub/pkg/proto";
 
+service NotificationService {
+  rpc SendNotification (SendNotificationRequest) returns (SendNotificationResponse);
+}
+
+message ChannelNotification {
+  string channel = 1;          // telegram, email, sms
+  string integration_key = 2;  // bot-client-A, smtp-provider-B
+  repeated string receivers = 3; // Список получателей
+}
+
 message SendNotificationRequest {
-  string channel = 1;         // telegram, email, sms
-  string integration_key = 2; // bot-client-A, smtp-provider-B
-  string receiver = 3;        // chat_id, email
-  string message = 4;
+  repeated ChannelNotification notifications = 1;
+  string message = 2;
+}
+
+message ChannelResult {
+  string channel = 1;
+  bool success = 2;
+  string error_message = 3;
 }
 
 message SendNotificationResponse {
-  bool success = 1;
-  string error_message = 2;
-}
-
-service NotificationService {
-  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+  repeated ChannelResult results = 1;
 }
