@@ -9,14 +9,15 @@ service NotificationService {
 }
 
 message ChannelNotification {
-  string channel = 1;          // telegram, email, sms
-  string integration_key = 2;  // bot-client-A, smtp-provider-B
-  repeated string receivers = 3; // Список получателей
+  string channel = 1;                 // telegram, email, sms, custom
+  string integration_key = 2;         // bot-client-A, smtp-provider-B, custom-provider
+  repeated string receivers = 3;      // список получателей (почты, номера телефонов, chat_id и т.д.)
+  map<string, string> metadata = 4;   // дополнительные параметры (токен, шаблон, тема письма и т.д.)
 }
 
 message SendNotificationRequest {
   repeated ChannelNotification notifications = 1;
-  string message = 2;
+  string message = 2; // универсальный текст, может быть переопределён в metadata
 }
 
 message ChannelResult {
